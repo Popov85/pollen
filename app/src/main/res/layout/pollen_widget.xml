@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.9"
+    android:background="@drawable/bg"
+    android:padding="@dimen/widget_margin">
+
+    <FrameLayout
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/appwidget_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:contentDescription="Title"
+            android:text="Zaporizhzhya, Ukraine"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/display_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top">
+
+        <TextView
+            android:id="@+id/today"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/danger_1"
+            android:text="Today" />
+
+        <TextView
+            android:id="@+id/tomorrow"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/top"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/danger_2"
+            android:text="Tomorrow" />
+
+        <TextView
+            android:id="@+id/after"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/danger_3"
+            android:text="After Tomorrow" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/updateImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:adjustViewBounds="true"
+                android:background="@drawable/icon_upd"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_upd" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_group"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/holo_blue_light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Last update: 01/09/17 at 6 a.m." />
+
+    </FrameLayout>
+
+
+</RelativeLayout>
