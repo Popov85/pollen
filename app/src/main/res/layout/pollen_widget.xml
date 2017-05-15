@@ -37,7 +37,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="2dp"
             android:background="@drawable/danger_1"
-            android:text="Today" />
+            android:text="Today\nLevel1: 05" />
 
         <TextView
             android:id="@+id/tomorrow"
@@ -46,14 +46,14 @@
             android:layout_below="@+id/top"
             android:layout_marginRight="2dp"
             android:background="@drawable/danger_2"
-            android:text="Tomorrow" />
+            android:text="Tomorrow\nLevel2: 19" />
 
         <TextView
             android:id="@+id/after"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:background="@drawable/danger_3"
-            android:text="After Tomorrow" />
+            android:text="After Tomorrow\nLevel3: 69" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -64,10 +64,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/icon_upd"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_upd" />
+                android:src="@drawable/button" />
         </FrameLayout>
 
     </LinearLayout>
@@ -77,11 +79,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/display_group"
         android:layout_marginTop="5dp"
-        android:background="@android:color/holo_blue_light">
+        android:background="@android:color/holo_blue_dark">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="159dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:layout_gravity="end"
             android:text="Last update: 01/09/17 at 6 a.m." />
 
     </FrameLayout>
