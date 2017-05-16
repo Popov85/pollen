@@ -18,7 +18,7 @@ public class PollenWidget extends AppWidgetProvider {
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
-        views.setTextViewText(R.id.appwidget_text, "Запоріжжя, Україна");
+        views.setTextViewText(R.id.appwidget_text, "Концентрація пилку (Запоріжжя, Україна)");
 
         /*views.setTextViewText(R.id.textView, "Today");
         views.setTextViewText(R.id.textView3, "Tomorrow");
