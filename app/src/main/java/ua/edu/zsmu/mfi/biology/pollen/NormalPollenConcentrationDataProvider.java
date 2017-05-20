@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen;
+package ua.edu.zsmu.mfi.biology.pollen;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,8 +19,8 @@ import java.util.Map;
 public final class NormalPollenConcentrationDataProvider {
 
     public NormalConcentration getDataFromLocalFile(Context context) {
-        String json = new LocalFileNormalPollenConcentrationDataProvider()
-                .getJSONFileContent(context);
+        String json = new LocalFileDataProvider()
+                .getJSONNormConcentrationFileContent(context);
         try {
             JSONObject jObject = new JSONObject(json);
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(jObject.getString("date"));

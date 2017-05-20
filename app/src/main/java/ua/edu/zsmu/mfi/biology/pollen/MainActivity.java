@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen;
+package ua.edu.zsmu.mfi.biology.pollen;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

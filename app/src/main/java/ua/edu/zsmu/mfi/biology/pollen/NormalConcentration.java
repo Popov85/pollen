@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen;
+package ua.edu.zsmu.mfi.biology.pollen;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ public final class NormalConcentration {
 
     private Date updated;
 
+    //Key - day of the year, value - normal pollen concentration of this day
     private Map<Integer, Double> storage = new HashMap<>();
 
     public Date getUpdated() {

@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen.weather;
+package ua.edu.zsmu.mfi.biology.pollen.weather;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,13 @@ public class DayWeather {
     }
 
     public double getAVGPressure() {
-        return 0d;
+        double sumPressure = 0;
+        int counter = 0;
+        for (Weather w : weather) {
+            sumPressure+=w.getPressure();
+            counter++;
+        }
+        return sumPressure/counter;
     }
 
     public double getAVGWind() {

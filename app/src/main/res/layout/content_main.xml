@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ua.edu.zsmy.biology.zsmu.pollen.MainActivity"
+    tools:context="ua.edu.zsmu.mfi.biology.pollen.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <TextView

@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen;
+package ua.edu.zsmu.mfi.biology.pollen;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -14,14 +14,14 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class LocalFileNormalPollenConcentrationDataProviderInstrumentedTest {
+public class LocalFileDataProviderInstrumentedTest {
 
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context context = InstrumentationRegistry.getTargetContext();
-        LocalFileNormalPollenConcentrationDataProvider localFileNormalPollenConcentrationDataProvider = new LocalFileNormalPollenConcentrationDataProvider();
-        String content = localFileNormalPollenConcentrationDataProvider.getJSONFileContent(context);
+        LocalFileDataProvider localFileDataProvider = new LocalFileDataProvider();
+        String content = localFileDataProvider.getJSONNormConcentrationFileContent(context);
         Log.i("contents", content);
         assertTrue(!content.isEmpty());
     }

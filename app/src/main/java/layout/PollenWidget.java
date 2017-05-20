@@ -3,18 +3,18 @@ package layout;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import ua.edu.zsmy.biology.zsmu.pollen.NormalPollenConcentrationDataProvider;
-import ua.edu.zsmy.biology.zsmu.pollen.NormalConcentration;
-import ua.edu.zsmy.biology.zsmu.pollen.R;
+import ua.edu.zsmu.mfi.biology.pollen.NormalPollenConcentrationDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
+import ua.edu.zsmu.mfi.biology.pollen.R;
+import ua.edu.zsmu.mfi.biology.pollen.weather.DownloadWeatherAsyncTask;
 
 public class PollenWidget extends AppWidgetProvider {
 
-    private static final String UPD_CLICKED    = "automaticWidgetSyncButtonClick";
+    private static final String UPD_CLICKED = "automaticWidgetSyncButtonClick";
 
     private NormalConcentration normalConcentrationStorage;
 
@@ -37,8 +37,11 @@ public class PollenWidget extends AppWidgetProvider {
             //new RandomDemo().randomlyUpdate(views);
             // TODO work here to receive updated weather data
 
-            ComponentName watchWidget = new ComponentName(context, PollenWidget.class);
-            appWidgetManager.updateAppWidget(watchWidget, views);
+            DownloadWeatherAsyncTask downloadWeatherAsyncTask = new DownloadWeatherAsyncTask(views, context);
+            downloadWeatherAsyncTask.execute();
+
+            /*ComponentName watchWidget = new ComponentName(context, PollenWidget.class);
+            appWidgetManager.updateAppWidget(watchWidget, views);*/
         }
     }
 

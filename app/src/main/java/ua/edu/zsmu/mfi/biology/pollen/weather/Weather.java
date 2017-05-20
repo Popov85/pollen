@@ -1,4 +1,4 @@
-package ua.edu.zsmy.biology.zsmu.pollen.weather;
+package ua.edu.zsmu.mfi.biology.pollen.weather;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Weather {
 
-    // Date and time for which the weather is forecasted
+    // Date and time for which the weather is forecast
     private Date dateTime;
 
     // Atmospheric pressure in mm of mercury

@@ -1,10 +1,10 @@
-package ua.edu.zsmy.biology.zsmu.pollen.demo;
+package ua.edu.zsmu.mfi.biology.pollen.demo;
 
 import android.widget.RemoteViews;
 
 import java.util.Random;
 
-import ua.edu.zsmy.biology.zsmu.pollen.R;
+import ua.edu.zsmu.mfi.biology.pollen.R;
 
 /**
  * Created by Andrey on 17.05.2017.
