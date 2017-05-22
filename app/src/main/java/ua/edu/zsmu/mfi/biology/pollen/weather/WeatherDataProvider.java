@@ -32,7 +32,6 @@ public final class WeatherDataProvider {
         Calendar calendar = getInstance();
         calendar.setTime(weather.get(0).getDateTime());
         int currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        Log.i("DAY", String.valueOf(currentDayOfMonth));
         List<Weather> dayWeather = new ArrayList<>();
         for (Weather w : weather) {
             Date date = w.getDateTime();
@@ -40,12 +39,16 @@ public final class WeatherDataProvider {
             int nextDay = calendar.get(Calendar.DAY_OF_MONTH);
             if (currentDayOfMonth==nextDay) {
                 dayWeather.add(w);
+                if (dayWeather.size()==8 && dayCounter==5) {
+                        result.put(dayCounter, new DayWeather(dayWeather));
+                }
             } else {
                 result.put(dayCounter, new DayWeather(dayWeather));
                 dayCounter++;
                 currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                Log.i("DAY_SWITCHED", String.valueOf(currentDayOfMonth));
                 dayWeather = new ArrayList<>();
+                dayWeather.add(w);
+                Log.i("PUT_Weather", String.valueOf(w));
             }
         }
         return result;
