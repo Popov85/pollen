@@ -1,11 +1,14 @@
 package ua.edu.zsmu.mfi.biology.pollen.weather;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,37 +24,43 @@ import static java.util.Calendar.getInstance;
 
 public final class WeatherDataProvider {
 
+    private static final String APP_ID = "887cd404c38497947eb969593d0aae87";
+
+    private static final String CITY= "Zaporizhzhya,ua";
+
+    private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q="+CITY+"&lang=en&&appid="+APP_ID;
+
+    public Map<Integer, DayWeather> getWeather5DaysForecast(String json) throws JSONException {
+        return getWeather5DaysForecast(parseWeatherData(json));
+    }
+
     /**
      * Parses json data and stows it Java map
-     * @param weather data from remote API
+     * @param weathers data from remote API
      * @return Weather forecast data per day for 5 days ahead
      */
-    public Map<Integer, DayWeather> getWeather5DaysForecast(List<Weather> weather) {
-        Map<Integer, DayWeather> result = new HashMap<>();
-        int dayCounter = 1;
+    private Map<Integer, DayWeather> getWeather5DaysForecast(List<Weather> weathers) {
         Calendar calendar = getInstance();
-        calendar.setTime(weather.get(0).getDateTime());
-        int currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        Map<Integer, DayWeather> result = new HashMap<>();
+        int day = 1;
+        int currentDayOfMonth = getDay(calendar, weathers.get(0).getDateTime());
         List<Weather> dayWeather = new ArrayList<>();
-        for (Weather w : weather) {
-            Date date = w.getDateTime();
-            calendar.setTime(date);
-            int nextDay = calendar.get(Calendar.DAY_OF_MONTH);
-            if (currentDayOfMonth==nextDay) {
-                dayWeather.add(w);
-                if (dayWeather.size()==8 && dayCounter==5) {
-                        result.put(dayCounter, new DayWeather(dayWeather));
-                }
-            } else {
-                result.put(dayCounter, new DayWeather(dayWeather));
-                dayCounter++;
-                currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        for (Weather weather : weathers) {
+            int nextDay = getDay(calendar, weather.getDateTime());
+            if (currentDayOfMonth!=nextDay) {
+                result.put(day++, new DayWeather(dayWeather, day));
+                currentDayOfMonth = nextDay;
                 dayWeather = new ArrayList<>();
-                dayWeather.add(w);
-                Log.i("PUT_Weather", String.valueOf(w));
             }
+            dayWeather.add(weather);
         }
+        result.put(day, new DayWeather(dayWeather, day));
         return result;
+    }
+
+    private int getDay(Calendar calendar, Date date) {
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     /**
@@ -60,7 +69,7 @@ public final class WeatherDataProvider {
      * @return
      * @throws JSONException
      */
-    public List<Weather> getWeather5DaysForecastRaw(String json) throws JSONException{
+    public List<Weather> parseWeatherData(String json) throws JSONException{
         List<Weather> weather = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(json);
         JSONArray list = jsonObject.getJSONArray("list");
@@ -89,6 +98,29 @@ public final class WeatherDataProvider {
     // Converts UNIX UTC date format to Java Date object
     private Date convertDate(long unixUTCDate) {
         return new Date(unixUTCDate*1000L);
+    }
+
+    public String downloadWeatherJSON() throws IOException {
+        BufferedReader reader = null;
+        try {
+            URL url = new URL(FORECAST_URL);
+            HttpURLConnection c =(HttpURLConnection)url.openConnection();
+            c.setRequestMethod("GET");
+            c.setReadTimeout(5000);
+            c.connect();
+            reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            StringBuilder buf = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                buf.append(line + "\n");
+            }
+            return buf.toString();
+        }
+        finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
     }
 
 }

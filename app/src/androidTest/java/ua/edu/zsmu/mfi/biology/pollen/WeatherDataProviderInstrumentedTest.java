@@ -30,7 +30,7 @@ public class WeatherDataProviderInstrumentedTest {
         String json = localFileDataProvider.getJSONWeatherForecastFileContent(context);
 
         WeatherDataProvider weatherDataProvider = new WeatherDataProvider();
-        List<Weather> weather = weatherDataProvider.getWeather5DaysForecastRaw(json);
+        List<Weather> weather = weatherDataProvider.parseWeatherData(json);
         Log.i("WeatherList:", weather.toString());
         assertTrue(!weather.isEmpty());
     }
@@ -44,8 +44,7 @@ public class WeatherDataProviderInstrumentedTest {
 
         WeatherDataProvider weatherDataProvider = new WeatherDataProvider();
         Map<Integer, DayWeather> weather = weatherDataProvider
-                .getWeather5DaysForecast(weatherDataProvider
-                        .getWeather5DaysForecastRaw(json));
+                .getWeather5DaysForecast(json);
 
         assertTrue(!weather.isEmpty());
 

@@ -11,7 +11,7 @@ import java.net.URL;
  * Created by Andrey on 19.05.2017.
  */
 
-public class DownloadWeatherAsyncTaskTest {
+public class PollenForecastAsyncTaskTest {
 
     @Test(timeout=5000)
     public void itShouldDownloadWeatherDataSmoothly() {

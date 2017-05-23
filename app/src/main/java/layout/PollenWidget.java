@@ -6,11 +6,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-
 import ua.edu.zsmu.mfi.biology.pollen.NormalPollenConcentrationDataProvider;
 import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
 import ua.edu.zsmu.mfi.biology.pollen.R;
-import ua.edu.zsmu.mfi.biology.pollen.weather.DownloadWeatherAsyncTask;
+import ua.edu.zsmu.mfi.biology.pollen.weather.PollenForecastAsyncTask;
 
 public class PollenWidget extends AppWidgetProvider {
 
@@ -24,29 +23,26 @@ public class PollenWidget extends AppWidgetProvider {
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
+        // TODO try to update right now
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (UPD_CLICKED.equals(intent.getAction())) {
-
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
-
             //new RandomDemo().randomlyUpdate(views);
-            // TODO work here to receive updated weather data
-
-            DownloadWeatherAsyncTask downloadWeatherAsyncTask = new DownloadWeatherAsyncTask(views, context);
-            downloadWeatherAsyncTask.execute();
-
-            /*ComponentName watchWidget = new ComponentName(context, PollenWidget.class);
-            appWidgetManager.updateAppWidget(watchWidget, views);*/
+            PollenForecastAsyncTask pollenForecastAsyncTask = new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
+            pollenForecastAsyncTask.execute();
         }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        // TODO check if the date is already approaching
+        // If inside the dates go to update
+        // Disable widget otherwise
+
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
         views.setOnClickPendingIntent(R.id.updateImageButton, getPendingSelfIntent(context, UPD_CLICKED));
@@ -57,7 +53,7 @@ public class PollenWidget extends AppWidgetProvider {
         }
     }
 
-    protected  PendingIntent getPendingSelfIntent(Context context, String action) {
+    private  PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);

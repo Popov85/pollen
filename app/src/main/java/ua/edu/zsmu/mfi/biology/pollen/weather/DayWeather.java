@@ -9,14 +9,22 @@ import java.util.List;
 
 public class DayWeather {
 
+    // Day of year (order number)
+    private int day;
+
     private List<Weather> weather = new ArrayList<>();
 
-    public DayWeather(List<Weather> weather) {
+    public DayWeather(List<Weather> weather, int day) {
         this.weather = weather;
+        this.day = day;
     }
 
     public List<Weather> getWeather() {
         return weather;
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public double getAVGPressure() {
@@ -30,14 +38,30 @@ public class DayWeather {
     }
 
     public double getAVGWind() {
-        return 0d;
+        double sumWind = 0;
+        int counter = 0;
+        for (Weather w : weather) {
+            sumWind+=w.getWind();
+            counter++;
+        }
+        return sumWind/counter;
     }
 
     public double getAVGHumidity() {
-        return 0d;
+        double sumHumidity = 0;
+        int counter = 0;
+        for (Weather w : weather) {
+            sumHumidity+=w.getHumidity();
+            counter++;
+        }
+        return sumHumidity/counter;
     }
 
     public double getTotalPrecipitation() {
-        return 0d;
+        double sumRain = 0;
+        for (Weather w : weather) {
+            sumRain+=w.getRain();
+        }
+        return sumRain;
     }
 }
