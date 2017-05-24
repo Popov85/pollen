@@ -9,9 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import java.util.Map;
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
-import ua.edu.zsmu.mfi.biology.pollen.weather.Pollen;
-import ua.edu.zsmu.mfi.biology.pollen.weather.PollenForecastEvaluator;
-import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;
 
 import static org.junit.Assert.assertTrue;
 
@@ -29,9 +27,9 @@ public class PollenForecastEvaluatorInstrumentedTest {
         NormalConcentration normalConcentration = normalPollenConcentrationDataProvider.getDataFromLocalFile(context);
         Log.i("normalConcentration", normalConcentration.toString());
 
-        WeatherDataProvider weatherDataProvider = new WeatherDataProvider();
+        WeatherForecastDataProvider weatherForecastDataProvider = new WeatherForecastDataProvider();
         Map<Integer, DayWeather> weatherForecast =
-                weatherDataProvider.getWeather5DaysForecast(weatherDataProvider.downloadWeatherJSON());
+                weatherForecastDataProvider.getWeather5DaysForecast(weatherForecastDataProvider.downloadWeatherJSON());
 
         PollenForecastEvaluator pollenForecastEvaluator = new PollenForecastEvaluator(weatherForecast, normalConcentration);
 

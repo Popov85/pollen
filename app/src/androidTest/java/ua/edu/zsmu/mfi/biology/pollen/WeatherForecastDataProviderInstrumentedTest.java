@@ -13,7 +13,7 @@ import java.util.Map;
 
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.Weather;
-import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;
 
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
  * Created by Andrey on 20.05.2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class WeatherDataProviderInstrumentedTest {
+public class WeatherForecastDataProviderInstrumentedTest {
 
     @Test
     public void itShouldCorrectlyParseWeatherJSON() throws Exception {
@@ -29,8 +29,8 @@ public class WeatherDataProviderInstrumentedTest {
         LocalFileDataProvider localFileDataProvider = new LocalFileDataProvider();
         String json = localFileDataProvider.getJSONWeatherForecastFileContent(context);
 
-        WeatherDataProvider weatherDataProvider = new WeatherDataProvider();
-        List<Weather> weather = weatherDataProvider.parseWeatherData(json);
+        WeatherForecastDataProvider weatherForecastDataProvider = new WeatherForecastDataProvider();
+        List<Weather> weather = weatherForecastDataProvider.parseWeatherData(json);
         Log.i("WeatherList:", weather.toString());
         assertTrue(!weather.isEmpty());
     }
@@ -42,8 +42,8 @@ public class WeatherDataProviderInstrumentedTest {
         String json = localFileDataProvider
                 .getJSONWeatherForecastFileContent(context);
 
-        WeatherDataProvider weatherDataProvider = new WeatherDataProvider();
-        Map<Integer, DayWeather> weather = weatherDataProvider
+        WeatherForecastDataProvider weatherForecastDataProvider = new WeatherForecastDataProvider();
+        Map<Integer, DayWeather> weather = weatherForecastDataProvider
                 .getWeather5DaysForecast(json);
 
         assertTrue(!weather.isEmpty());

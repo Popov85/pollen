@@ -9,7 +9,7 @@ import android.widget.RemoteViews;
 import ua.edu.zsmu.mfi.biology.pollen.NormalPollenConcentrationDataProvider;
 import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
 import ua.edu.zsmu.mfi.biology.pollen.R;
-import ua.edu.zsmu.mfi.biology.pollen.weather.PollenForecastAsyncTask;
+import ua.edu.zsmu.mfi.biology.pollen.PollenForecastAsyncTask;
 
 public class PollenWidget extends AppWidgetProvider {
 
@@ -23,7 +23,7 @@ public class PollenWidget extends AppWidgetProvider {
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
-        // TODO try to update right now
+        // TODO try to update right now programmatically
     }
 
     @Override

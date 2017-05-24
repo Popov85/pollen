@@ -1,10 +1,13 @@
-package ua.edu.zsmu.mfi.biology.pollen.weather;
+package ua.edu.zsmu.mfi.biology.pollen;
+
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
+import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
+import ua.edu.zsmu.mfi.biology.pollen.weather.YesterdayWeather;
 
 /**
  * Created by Andrey on 20.05.2017.
@@ -46,36 +49,6 @@ public class PollenForecastEvaluator {
                 previousHumidity = day.getAVGHumidity();
             }
         }
-
-     /*   DayWeather today = weatherForecast.get(1);
-        double normalPollenToday = normalConcentrationStorage.getNormalConcentration(today.getDay());
-        double todayPressure = today.getAVGPressure();
-        double todayWind = today.getAVGWind();
-        double todayHumidity = today.getAVGHumidity();
-        double expectedPollenToday = normalPollenToday
-                *getK1(yesterdayWeather.getWeather().getPressure(), todayPressure)
-                *getK2(yesterdayWeather.getWeather().getWind(), todayWind)
-                *getK3(today.getTotalPrecipitation())
-                *getK4(yesterdayWeather.getWeather().getHumidity(), todayHumidity);
-        int expectedLevelToday = calculateLevel(expectedPollenToday);
-        Pollen pollen1 = new Pollen(expectedPollenToday, expectedLevelToday);
-        pollenForecast.put(1, pollen1);
-
-
-        DayWeather tomorrow = weatherForecast.get(2);
-        double normalPollenTomorrow = normalConcentrationStorage.getNormalConcentration(tomorrow.getDay());
-        double tomorrowPressure = tomorrow.getAVGPressure();
-        double tomorrowWind = tomorrow.getAVGWind();
-        double tomorrowHumidity = tomorrow.getAVGHumidity();
-        double expectedPollenTomorrow = normalPollenTomorrow
-                *getK1(todayPressure, tomorrowPressure)
-                *getK2(todayWind, tomorrowWind)
-                *getK3(tomorrow.getTotalPrecipitation())
-                *getK4(todayHumidity, tomorrowHumidity);
-        int expectedLevelTomorrow = calculateLevel(expectedPollenTomorrow);
-        Pollen pollen2 = new Pollen(expectedPollenTomorrow, expectedLevelTomorrow);
-        pollenForecast.put(2, pollen2);*/
-
         return pollenForecast;
     }
 
@@ -83,17 +56,35 @@ public class PollenForecastEvaluator {
                                      double previousWind, double previousHumidity) {
         DayWeather today = weatherForecast.get(day);
         double normalPollen = 100; //normalConcentrationStorage.getNormalConcentration(today.getDay());
-        double expectedPollen = normalPollen
-                *getK1(previousPressure, today.getAVGPressure())
-                *getK2(previousWind, today.getAVGWind())
-                *getK3(today.getTotalPrecipitation())
-                *getK4(previousHumidity, today.getAVGHumidity());
+
+        double k1 = getK1(previousPressure, today.getAVGPressure());
+        Log.i("k1=", k1+"");
+
+        double k2 = getK2(previousWind, today.getAVGWind());
+        Log.i("k2=", k2+"");
+
+        double k3 = getK3(today.getTotalPrecipitation());
+        Log.i("k3=", k3+"");
+
+        double k4 = getK4(previousHumidity, today.getAVGHumidity());
+        Log.i("k4=", k4+"");
+
+        Log.i("day=", day+"");
+        double production = k1*k2*k3*k4;
+        Log.i("production=", production+"");
+
+        double expectedPollen = normalPollen*k1*k2*k3*k4;
+        Log.i("day=", day+"");
+        Log.i("expectedPollen=", expectedPollen+"");
+
         int expectedLevel = calculateLevel(expectedPollen);
         Pollen pollen = new Pollen(expectedPollen, expectedLevel);
         return pollen;
     }
 
     private double getK1(double pressurePreviousDay, double pressureNextDay) {
+        Log.i("prevPressure=", pressurePreviousDay+"");
+        Log.i("nextPressure=", pressureNextDay+"");
         if ((pressurePreviousDay-pressureNextDay)>0) {
             return ((pressurePreviousDay-pressureNextDay)*15+10)*0.12;
         } else {
@@ -125,10 +116,10 @@ public class PollenForecastEvaluator {
     }
 
     private int calculateLevel(double value) {
-        if (value<=10) return 1;
-        if (value>10 &&value<=20) return 2;
-        if (value>20 &&value<=70) return 3;
-        if (value>70 &&value<=199) return 4;
+        if (value<=19) return 1;
+        if (value>19 &&value<=99) return 2;
+        if (value>99 &&value<=399) return 3;
+        if (value>399 &&value<=999) return 4;
         return 5;
     }
 }

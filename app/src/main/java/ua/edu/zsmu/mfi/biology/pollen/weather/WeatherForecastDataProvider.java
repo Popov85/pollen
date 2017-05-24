@@ -3,12 +3,6 @@ package ua.edu.zsmu.mfi.biology.pollen.weather;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,13 +16,15 @@ import static java.util.Calendar.getInstance;
  * Created by Andrey on 18.05.2017.
  */
 
-public final class WeatherDataProvider {
+public final class WeatherForecastDataProvider {
 
     private static final String APP_ID = "887cd404c38497947eb969593d0aae87";
 
     private static final String CITY= "Zaporizhzhya,ua";
 
     private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q="+CITY+"&lang=en&&appid="+APP_ID;
+
+    public static final double MM_OF_MERCURY_CONST = 0.750061561303;
 
     public Map<Integer, DayWeather> getWeather5DaysForecast(String json) throws JSONException {
         return getWeather5DaysForecast(parseWeatherData(json));
@@ -79,17 +75,19 @@ public final class WeatherDataProvider {
             long date = weatherObject.getLong("dt");
 
             JSONObject mainObject = weatherObject.getJSONObject("main");
-            double pressure = mainObject.getDouble("pressure");
+            double pressure = mainObject.getDouble("pressure")*MM_OF_MERCURY_CONST;
             double humidity = mainObject.getDouble("humidity");
 
             JSONObject windObject = weatherObject.getJSONObject("wind");
             double wind = windObject.getDouble("speed");
 
             JSONObject rainObject = weatherObject.optJSONObject("rain");
-            double rain = windObject.optDouble("3h");
-            if (Double.isNaN(rain)) rain = 0;
-
-            Weather w = new Weather(convertDate(date),pressure, wind, rain, humidity);
+            double rain = 0;
+            if (rainObject!=null) {
+                rain = rainObject.optDouble("3h");
+                if (Double.isNaN(rain)) rain = 0;
+            }
+            Weather w = new Weather(convertDate(date), pressure, wind, rain, humidity);
             weather.add(w);
         }
         return weather;
@@ -100,27 +98,8 @@ public final class WeatherDataProvider {
         return new Date(unixUTCDate*1000L);
     }
 
-    public String downloadWeatherJSON() throws IOException {
-        BufferedReader reader = null;
-        try {
-            URL url = new URL(FORECAST_URL);
-            HttpURLConnection c =(HttpURLConnection)url.openConnection();
-            c.setRequestMethod("GET");
-            c.setReadTimeout(5000);
-            c.connect();
-            reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
-            StringBuilder buf = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                buf.append(line + "\n");
-            }
-            return buf.toString();
-        }
-        finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
+    public String downloadWeatherJSON() throws Exception {
+        return RemoteJSONDownloader.downloadJSON(FORECAST_URL);
     }
 
 }

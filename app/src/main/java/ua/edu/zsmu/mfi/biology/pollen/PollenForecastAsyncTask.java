@@ -1,4 +1,4 @@
-package ua.edu.zsmu.mfi.biology.pollen.weather;
+package ua.edu.zsmu.mfi.biology.pollen;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -11,14 +11,17 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 import layout.PollenWidget;
-import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
-import ua.edu.zsmu.mfi.biology.pollen.R;
+import ua.edu.zsmu.mfi.biology.pollen.weather.Weather;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherHistoryDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherWrapper;
+import ua.edu.zsmu.mfi.biology.pollen.weather.YesterdayWeather;
 
 /**
  * Created by Andrey on 19.05.2017.
  */
 
-public class PollenForecastAsyncTask extends AsyncTask<String, Void, String> {
+public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrapper> {
 
     private RemoteViews remoteViews;
 
@@ -26,43 +29,54 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, String> {
 
     private NormalConcentration normalConcentration;
 
-    private WeatherDataProvider weatherDataProvider;
+    private WeatherForecastDataProvider weatherForecastDataProvider;
 
-    public PollenForecastAsyncTask(RemoteViews remoteViews, Context context, NormalConcentration normalConcentration) {
+    private WeatherHistoryDataProvider weatherHistoryDataProvider;
+
+    public PollenForecastAsyncTask(RemoteViews remoteViews, Context context,
+                                   NormalConcentration normalConcentration) {
         this.remoteViews = remoteViews;
         this.context = context;
         this.normalConcentration = normalConcentration;
-        this.weatherDataProvider = new WeatherDataProvider();
+        this.weatherForecastDataProvider = new WeatherForecastDataProvider();
+        this.weatherHistoryDataProvider = new WeatherHistoryDataProvider();
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        String s = null;
+    protected WeatherWrapper doInBackground(String... params) {
+        String forecast = null;
+        String history = null;
         try {
-            setMessage("Downloading weather...");
-            s = weatherDataProvider.downloadWeatherJSON();
+            setMessage("Downloading forecast...");
+            forecast = weatherForecastDataProvider.downloadWeatherJSON();
+            setMessage("Downloading history...");
+            history = weatherHistoryDataProvider.downloadWeatherJSON();
         } catch (Exception e) {
             setMessage("Failed to download...");
             Log.e("ERROR", e.getMessage());
         }
-        return s;
+        return new WeatherWrapper(forecast, history);
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(WeatherWrapper wrapper) {
         setMessage("Downloaded...");
         try {
-            Weather weather = new Weather(new Date(), 1000d, 4d, 2d, 75);
+            // TODO set yesterday data
+            //YesterdayWeather.getInstance().setWeather(weatherHistoryDataProvider.getWeatherYesterday(wrapper.getHistory()));
+            Weather weather = new Weather(new Date(), 760d, 4d, 0.5d, 75d);
             YesterdayWeather.getInstance().setWeather(weather);
 
             PollenForecastEvaluator pollenForecastEvaluator =
-                    new PollenForecastEvaluator(weatherDataProvider.getWeather5DaysForecast(s), normalConcentration);
+                    new PollenForecastEvaluator(weatherForecastDataProvider
+                            .getWeather5DaysForecast(wrapper.getForecast()), normalConcentration);
             Map<Integer, Pollen> forecast = pollenForecastEvaluator.getPollenForecast();
             setForecast(forecast);
         } catch (Exception e) {
             setMessage("Failure processing data...");
             Log.e("ERROR", e.getMessage());
         }
+        setMessage("Updated...");
         setUpdated("Востаннє оновлено: "+getDate());
     }
 

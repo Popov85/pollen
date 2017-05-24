@@ -16,12 +16,18 @@ public final class LocalFileDataProvider {
 
     private static final String SAMPLE_WEATHER_FORECAST__FILE_NAME = "forecast.json";
 
+    private static final String SAMPLE_WEATHER_HISTORY_FILE_NAME = "history.json";
+
     public String getJSONNormConcentrationFileContent(Context context) {
       return getJSONFileContent(context, NORM_CONCENTRATION_FILE_NAME);
     }
 
     public String getJSONWeatherForecastFileContent(Context context) {
         return getJSONFileContent(context, SAMPLE_WEATHER_FORECAST__FILE_NAME);
+    }
+
+    public String getJSONWeatherHistoryFileContent(Context context) {
+        return getJSONFileContent(context, SAMPLE_WEATHER_HISTORY_FILE_NAME);
     }
 
     private String getJSONFileContent(Context context, String path) {
