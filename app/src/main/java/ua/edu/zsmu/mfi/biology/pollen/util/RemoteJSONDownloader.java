@@ -1,6 +1,5 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.util;
 
-import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,27 +7,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Andrey on 19.05.2017.
+ * Created by Andrey on 24.05.2017.
  */
+public final class RemoteJSONDownloader {
 
-public class PollenForecastAsyncTaskTest {
+    private static final String METHOD = "GET";
+    // Timeout in ms
+    private static final int TIMEOUT = 5000;
 
-    @Test(timeout=5000)
-    public void itShouldDownloadWeatherDataSmoothly() {
-        try {
-            System.out.println("Downloaded: "+getContent());
-        } catch (IOException e) {
-            System.out.println("ERROR...");
-        }
-    }
-
-    private String getContent() throws IOException {
+    public static String downloadJSON(String urlStr) throws IOException {
         BufferedReader reader = null;
         try {
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=Zaporizhzhya,ua&lang=en&&appid=887cd404c38497947eb969593d0aae87");
+            URL url = new URL(urlStr);
             HttpURLConnection c =(HttpURLConnection)url.openConnection();
-            c.setRequestMethod("GET");
-            c.setReadTimeout(5000);
+            c.setRequestMethod(METHOD);
+            c.setReadTimeout(TIMEOUT);
             c.connect();
             reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
             StringBuilder buf = new StringBuilder();
@@ -44,4 +37,5 @@ public class PollenForecastAsyncTaskTest {
             }
         }
     }
+
 }

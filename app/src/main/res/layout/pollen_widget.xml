@@ -23,12 +23,13 @@
             android:layout_marginLeft="2dp"
             android:contentDescription="Title"
             android:textSize="10dp"
-            android:text="Концентрація пилку у повітрі"
+            android:textStyle="italic"
+            android:text="Концентрація пилку у повітрі м. Запоріжжя (Україна)"
             android:textColor="#ffffff"
             />
 
         <TextView
-            android:id="@+id/appwidget_about"
+            android:id="@+id/appwidget_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right"
@@ -37,14 +38,9 @@
             android:layout_marginRight="2dp"
             android:contentDescription="Title"
             android:textSize="10dp"
-            android:text="(Запоріжжя, Україна)"
-            android:textStyle="italic"
-            android:textColor="#ffffff"
+            android:text="Демонстрація"
+            android:textColor="@android:color/darker_gray"
             />
-
-
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:orientation="vertical"
-            android:background="@drawable/danger_1"
+            android:background="@drawable/danger_unknown"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
             >
@@ -87,7 +83,7 @@
                 android:layout_marginTop="-2dp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                android:text="Рівень 1"
+                android:text="Рівень 0"
                 android:layout_gravity="center"
                 />
 
@@ -97,8 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-2dp"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"
-                android:text="05 од."
+                android:textSize="9sp"
+                android:text="00 з/м.куб"
                 android:layout_gravity="center"
                 />
 
@@ -110,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:orientation="vertical"
-        android:background="@drawable/danger_3"
+        android:background="@drawable/danger_unknown"
         android:layout_weight="1"
         android:layout_marginRight="2dp"
         >
@@ -132,7 +128,7 @@
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:layout_gravity="center"
-            android:text="Рівень 3" />
+            android:text="Рівень 0" />
 
         <TextView
             android:id="@+id/tomorrow_value"
@@ -141,8 +137,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="-2dp"
             android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:text="69 од."
+            android:textSize="9sp"
+            android:text="00 з/м.куб"
             />
 
         </LinearLayout>
@@ -153,7 +149,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:orientation="vertical"
-        android:background="@drawable/danger_5"
+        android:background="@drawable/danger_unknown"
         android:layout_weight="1"
         android:layout_marginRight="2dp"
 
@@ -176,7 +172,7 @@
             android:layout_marginTop="-2dp"
             android:textColor="@android:color/white"
             android:textSize="12sp"
-            android:text="Рівень 5"
+            android:text="Рівень 0"
             />
 
         <TextView
@@ -186,8 +182,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="-2dp"
             android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:text="210 од."
+            android:textSize="9sp"
+            android:text="00 з/м.куб"
             />
 
         </LinearLayout>

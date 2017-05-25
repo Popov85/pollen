@@ -1,4 +1,4 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.util;
 
 import android.content.Context;
 import android.util.Log;

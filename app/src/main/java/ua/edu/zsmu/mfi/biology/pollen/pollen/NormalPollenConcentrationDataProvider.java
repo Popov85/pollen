@@ -1,4 +1,4 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import ua.edu.zsmu.mfi.biology.pollen.util.LocalFileDataProvider;
 
 /**
  * Created by Andrey on 17.05.2017.

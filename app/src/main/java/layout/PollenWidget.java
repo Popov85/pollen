@@ -6,10 +6,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import ua.edu.zsmu.mfi.biology.pollen.NormalPollenConcentrationDataProvider;
-import ua.edu.zsmu.mfi.biology.pollen.NormalConcentration;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalPollenConcentrationDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalConcentration;
 import ua.edu.zsmu.mfi.biology.pollen.R;
-import ua.edu.zsmu.mfi.biology.pollen.PollenForecastAsyncTask;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.PollenForecastAsyncTask;
 
 public class PollenWidget extends AppWidgetProvider {
 

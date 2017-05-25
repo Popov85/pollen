@@ -7,6 +7,9 @@ import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import ua.edu.zsmu.mfi.biology.pollen.util.LocalFileDataProvider;
+
 import static org.junit.Assert.assertTrue;
 
 /**

@@ -12,16 +12,16 @@ public class YesterdayWeather {
         return ourInstance;
     }
 
-    private Weather weather;
+    private DayWeather weather;
 
     private YesterdayWeather() {
     }
 
-    public Weather getWeather() {
+    public DayWeather getWeather() {
         return weather;
     }
 
-    public void setWeather(Weather weather) {
+    public void setWeather(DayWeather weather) {
         this.weather = weather;
     }
 }

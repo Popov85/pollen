@@ -1,8 +1,7 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,8 +20,6 @@ public class PollenForecastEvaluator {
 
     private YesterdayWeather yesterdayWeather = YesterdayWeather.getInstance();
 
-    private Calendar calendar = Calendar.getInstance();
-
     public PollenForecastEvaluator(Map<Integer, DayWeather> weatherForecast, NormalConcentration normalConcentration) {
         this.weatherForecast = weatherForecast;
         this.normalConcentrationStorage = normalConcentration;
@@ -36,9 +33,9 @@ public class PollenForecastEvaluator {
 
         Map<Integer, Pollen> pollenForecast = new HashMap<>();
 
-        double previousPressure = yesterdayWeather.getWeather().getPressure();
-        double previousWind =  yesterdayWeather.getWeather().getWind();
-        double previousHumidity = yesterdayWeather.getWeather().getHumidity();
+        double previousPressure = yesterdayWeather.getWeather().getAVGPressure();
+        double previousWind =  yesterdayWeather.getWeather().getAVGWind();
+        double previousHumidity = yesterdayWeather.getWeather().getAVGHumidity();
         for (int i = 1; i <=3 ; i++) {
             Pollen p = getExpectedPollen(i, previousPressure, previousWind, previousHumidity);
             pollenForecast.put(i, p);

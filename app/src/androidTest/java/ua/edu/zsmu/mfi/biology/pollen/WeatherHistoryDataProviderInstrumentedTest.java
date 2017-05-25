@@ -1,13 +1,10 @@
 package ua.edu.zsmu.mfi.biology.pollen;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.List;
-import ua.edu.zsmu.mfi.biology.pollen.weather.Weather;
+import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherHistoryDataProvider;
 import static org.junit.Assert.assertTrue;
 
@@ -18,15 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class WeatherHistoryDataProviderInstrumentedTest {
 
     @Test
-    public void itShouldCorrectlyParseWeatherJSON() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        LocalFileDataProvider localFileDataProvider = new LocalFileDataProvider();
-        String json = localFileDataProvider.getJSONWeatherHistoryFileContent(context);
-
+    public void itShouldCorrectlyParseWeatherRemoteJSONFile() throws Exception {
         WeatherHistoryDataProvider weatherHistoryDataProvider = new WeatherHistoryDataProvider();
-        List<Weather> weather = weatherHistoryDataProvider.parseWeatherData(json);
-        Log.i("WeatherList:", weather.toString());
-        assertTrue(!weather.isEmpty());
-        assertTrue(weather.size()==24);
+        DayWeather dayWeather = weatherHistoryDataProvider.getWeatherYesterday();
+        Log.i("DayWeather", dayWeather.toString());
+        Log.i("AVG_PRESSURE=", dayWeather.getAVGPressure()+"");
+        Log.i("AVG_WIND=:", dayWeather.getAVGWind()+"");
+        Log.i("AVG_HUMIDITY=", dayWeather.getAVGHumidity()+"");
+        Log.i("SUM_RAIN=", dayWeather.getTotalPrecipitation()+"");
+
+        assertTrue(dayWeather!=null);
+        assertTrue(dayWeather.getWeather().size()==24);
     }
+
 }

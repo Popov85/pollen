@@ -1,4 +1,4 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
 /**
  * Created by Andrey on 23.05.2017.

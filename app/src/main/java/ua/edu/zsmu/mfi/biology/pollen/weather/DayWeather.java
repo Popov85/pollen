@@ -1,7 +1,5 @@
 package ua.edu.zsmu.mfi.biology.pollen.weather;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +60,6 @@ public class DayWeather {
     public double getTotalPrecipitation() {
         double sumRain = 0;
         for (Weather w : weather) {
-            Log.i("RAIN_i=", w.getRain()+"");
             sumRain+=w.getRain();
         }
         return sumRain;

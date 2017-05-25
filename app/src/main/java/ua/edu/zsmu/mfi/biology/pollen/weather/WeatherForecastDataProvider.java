@@ -1,14 +1,14 @@
 package ua.edu.zsmu.mfi.biology.pollen.weather;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import ua.edu.zsmu.mfi.biology.pollen.util.RemoteJSONDownloader;
 
 import static java.util.Calendar.getInstance;
 
@@ -24,10 +24,12 @@ public final class WeatherForecastDataProvider {
 
     private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q="+CITY+"&lang=en&&appid="+APP_ID;
 
-    public static final double MM_OF_MERCURY_CONST = 0.750061561303;
+    public String downloadWeatherJSON() throws Exception {
+        return RemoteJSONDownloader.downloadJSON(FORECAST_URL);
+    }
 
     public Map<Integer, DayWeather> getWeather5DaysForecast(String json) throws JSONException {
-        return getWeather5DaysForecast(parseWeatherData(json));
+        return getWeather5DaysForecast(new ForecastWeatherJSONParser().parseWeatherData(json));
     }
 
     /**
@@ -58,48 +60,4 @@ public final class WeatherForecastDataProvider {
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
-
-    /**
-     * Gets weather data for 5 days, multiple weather data per day
-     * @param json
-     * @return
-     * @throws JSONException
-     */
-    public List<Weather> parseWeatherData(String json) throws JSONException{
-        List<Weather> weather = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(json);
-        JSONArray list = jsonObject.getJSONArray("list");
-        for (int i = 0; i < list.length(); i++) {
-            JSONObject weatherObject = list.getJSONObject(i);
-
-            long date = weatherObject.getLong("dt");
-
-            JSONObject mainObject = weatherObject.getJSONObject("main");
-            double pressure = mainObject.getDouble("pressure")*MM_OF_MERCURY_CONST;
-            double humidity = mainObject.getDouble("humidity");
-
-            JSONObject windObject = weatherObject.getJSONObject("wind");
-            double wind = windObject.getDouble("speed");
-
-            JSONObject rainObject = weatherObject.optJSONObject("rain");
-            double rain = 0;
-            if (rainObject!=null) {
-                rain = rainObject.optDouble("3h");
-                if (Double.isNaN(rain)) rain = 0;
-            }
-            Weather w = new Weather(convertDate(date), pressure, wind, rain, humidity);
-            weather.add(w);
-        }
-        return weather;
-    }
-
-    // Converts UNIX UTC date format to Java Date object
-    private Date convertDate(long unixUTCDate) {
-        return new Date(unixUTCDate*1000L);
-    }
-
-    public String downloadWeatherJSON() throws Exception {
-        return RemoteJSONDownloader.downloadJSON(FORECAST_URL);
-    }
-
 }

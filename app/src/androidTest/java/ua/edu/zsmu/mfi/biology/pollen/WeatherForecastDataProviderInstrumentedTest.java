@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.Map;
 
+import ua.edu.zsmu.mfi.biology.pollen.util.LocalFileDataProvider;
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.Weather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;

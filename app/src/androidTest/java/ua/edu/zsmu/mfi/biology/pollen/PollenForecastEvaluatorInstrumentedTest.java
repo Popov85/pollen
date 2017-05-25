@@ -8,6 +8,11 @@ import android.util.Log;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import java.util.Map;
+
+import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalConcentration;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalPollenConcentrationDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.Pollen;
+import ua.edu.zsmu.mfi.biology.pollen.pollen.PollenForecastEvaluator;
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;
 

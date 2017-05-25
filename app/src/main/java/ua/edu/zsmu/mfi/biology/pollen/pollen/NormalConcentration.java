@@ -1,4 +1,4 @@
-package ua.edu.zsmu.mfi.biology.pollen;
+package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
 import java.util.Date;
 import java.util.HashMap;
