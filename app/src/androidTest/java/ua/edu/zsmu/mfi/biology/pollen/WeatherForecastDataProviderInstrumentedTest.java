@@ -25,18 +25,6 @@ import static org.junit.Assert.assertTrue;
 public class WeatherForecastDataProviderInstrumentedTest {
 
     @Test
-    public void itShouldCorrectlyParseWeatherJSON() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        LocalFileDataProvider localFileDataProvider = new LocalFileDataProvider();
-        String json = localFileDataProvider.getJSONWeatherForecastFileContent(context);
-
-        WeatherForecastDataProvider weatherForecastDataProvider = new WeatherForecastDataProvider();
-        List<Weather> weather = weatherForecastDataProvider.parseWeatherData(json);
-        Log.i("WeatherList:", weather.toString());
-        assertTrue(!weather.isEmpty());
-    }
-
-    @Test
     public void itShouldCorrectlyCreateWeatherPerDays() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
         LocalFileDataProvider localFileDataProvider = new LocalFileDataProvider();

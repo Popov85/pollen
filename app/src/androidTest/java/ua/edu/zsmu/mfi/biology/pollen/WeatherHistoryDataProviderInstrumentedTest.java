@@ -17,7 +17,7 @@ public class WeatherHistoryDataProviderInstrumentedTest {
     @Test
     public void itShouldCorrectlyParseWeatherRemoteJSONFile() throws Exception {
         WeatherHistoryDataProvider weatherHistoryDataProvider = new WeatherHistoryDataProvider();
-        DayWeather dayWeather = weatherHistoryDataProvider.getWeatherYesterday();
+        DayWeather dayWeather = weatherHistoryDataProvider.getWeatherYesterday(weatherHistoryDataProvider.downloadWeatherJSON());
         Log.i("DayWeather", dayWeather.toString());
         Log.i("AVG_PRESSURE=", dayWeather.getAVGPressure()+"");
         Log.i("AVG_WIND=:", dayWeather.getAVGWind()+"");

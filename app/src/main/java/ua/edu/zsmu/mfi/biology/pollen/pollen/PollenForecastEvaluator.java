@@ -1,10 +1,8 @@
 package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
 import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.YesterdayWeather;
 
@@ -31,6 +29,7 @@ public class PollenForecastEvaluator {
      */
     public Map<Integer, Pollen> getPollenForecast() {
 
+        // TODO work here to get mode
         Map<Integer, Pollen> pollenForecast = new HashMap<>();
 
         double previousPressure = yesterdayWeather.getWeather().getAVGPressure();
@@ -80,8 +79,6 @@ public class PollenForecastEvaluator {
     }
 
     private double getK1(double pressurePreviousDay, double pressureNextDay) {
-        Log.i("prevPressure=", pressurePreviousDay+"");
-        Log.i("nextPressure=", pressureNextDay+"");
         if ((pressurePreviousDay-pressureNextDay)>0) {
             return ((pressurePreviousDay-pressureNextDay)*15+10)*0.12;
         } else {

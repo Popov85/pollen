@@ -23,7 +23,7 @@ public class PollenWidget extends AppWidgetProvider {
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
-        // TODO try to update right now programmatically
+        // TODO try to update right now programmatically (optionally)
     }
 
     @Override
@@ -32,23 +32,18 @@ public class PollenWidget extends AppWidgetProvider {
         if (UPD_CLICKED.equals(intent.getAction())) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
             //new RandomDemo().randomlyUpdate(views);
-            PollenForecastAsyncTask pollenForecastAsyncTask = new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
+            PollenForecastAsyncTask pollenForecastAsyncTask =
+                    new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
             pollenForecastAsyncTask.execute();
         }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // TODO check if the date is already approaching
-        // If inside the dates go to update
-        // Disable widget otherwise
-
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
         views.setOnClickPendingIntent(R.id.updateImageButton, getPendingSelfIntent(context, UPD_CLICKED));
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            //updateAppWidget(context, appWidgetManager, appWidgetId);
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }

@@ -60,6 +60,7 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrap
             PollenForecastEvaluator pollenForecastEvaluator =
                     new PollenForecastEvaluator(weatherForecastDataProvider
                             .getWeather5DaysForecast(wrapper.getForecast()), normalConcentration);
+            // TODO work here to determine the mode
             Map<Integer, Pollen> forecast = pollenForecastEvaluator.getPollenForecast();
             widgetView.setForecast(forecast);
         } catch (Exception e) {

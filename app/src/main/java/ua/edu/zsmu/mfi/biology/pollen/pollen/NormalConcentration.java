@@ -1,5 +1,6 @@
 package ua.edu.zsmu.mfi.biology.pollen.pollen;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,13 @@ public final class NormalConcentration {
         return storage.get(day);
     }
 
+    public int getStartDay() {
+        return Collections.min(storage.keySet());
+    }
+
+    public int getEndDay() {
+        return Collections.max(storage.keySet());
+    }
 
     @Override
     public String toString() {
