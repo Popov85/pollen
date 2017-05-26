@@ -35,11 +35,11 @@
             android:layout_gravity="right"
             android:gravity="right"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="7sp"
             android:contentDescription="Title"
             android:textSize="10dp"
-            android:text="Демонстрація"
-            android:textColor="@android:color/darker_gray"
+            android:text="Демо"
+            android:textColor="@android:color/holo_red_dark"
             />
     </LinearLayout>
 
@@ -59,7 +59,9 @@
         <LinearLayout
             android:id="@+id/today_container"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            android:minHeight="40dp"
+            android:minWidth="50dp"
             android:orientation="vertical"
             android:background="@drawable/danger_unknown"
             android:layout_weight="1"
@@ -70,8 +72,10 @@
                 android:id="@+id/today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                android:textSize="10dp"
+                android:layout_marginBottom="0dp"
+                android:paddingBottom="0dp"
+                android:textSize="10sp"
+                android:textColor="@android:color/white"
                 android:text="Сьогодні"
                 android:layout_gravity="center"
                 />
@@ -80,10 +84,10 @@
                 android:id="@+id/today_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
+                android:layout_marginTop="0sp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                android:text="Рівень 0"
+                android:text="Рівень: 0"
                 android:layout_gravity="center"
                 />
 
@@ -91,7 +95,7 @@
                 android:id="@+id/today_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
+                android:layout_marginTop="0sp"
                 android:textColor="@android:color/white"
                 android:textSize="9sp"
                 android:text="00 з/м.куб"
@@ -104,7 +108,9 @@
     <LinearLayout
         android:id="@+id/tomorrow_container"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:minWidth="50dp"
         android:orientation="vertical"
         android:background="@drawable/danger_unknown"
         android:layout_weight="1"
@@ -117,25 +123,25 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="0dp"
             android:layout_gravity="center"
-            android:textSize="10dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
             android:text="Завтра" />
 
         <TextView
             android:id="@+id/tomorrow_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-02dp"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
             android:layout_gravity="center"
-            android:text="Рівень 0" />
+            android:layout_marginTop="0sp"
+            android:text="Рівень: 0"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tomorrow_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="-2dp"
             android:textColor="@android:color/white"
             android:textSize="9sp"
             android:text="00 з/м.куб"
@@ -147,7 +153,9 @@
     <LinearLayout
         android:id="@+id/after_container"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:minWidth="50dp"
         android:orientation="vertical"
         android:background="@drawable/danger_unknown"
         android:layout_weight="1"
@@ -160,7 +168,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Післязав."
-            android:textSize="10dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             />
 
@@ -169,10 +178,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="-2dp"
+            android:layout_marginTop="0sp"
             android:textColor="@android:color/white"
             android:textSize="12sp"
-            android:text="Рівень 0"
+            android:text="Рівень: 0"
             />
 
         <TextView
@@ -180,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="-2dp"
+            android:layout_marginTop="0sp"
             android:textColor="@android:color/white"
             android:textSize="9sp"
             android:text="00 з/м.куб"
@@ -191,9 +200,10 @@
 
 
         <FrameLayout
-            android:layout_width="0dp"
+            android:layout_width="0sp"
             android:layout_height="match_parent"
-            android:minWidth="50dp"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -203,7 +213,8 @@
                 android:id="@+id/updateImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minWidth="40dp"
+                android:minWidth="20dp"
+                android:minHeight="20dp"
                 android:layout_gravity="right"
                 android:adjustViewBounds="true"
                 android:background="@drawable/icon_upd"
@@ -236,7 +247,7 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/white"
             android:layout_gravity="end"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="7sp"
             android:textSize="10dp"
             android:text="Востаннє оновлено: 01/09/17 at 6 a.m." />
 

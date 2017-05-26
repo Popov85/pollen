@@ -15,6 +15,8 @@ import ua.edu.zsmu.mfi.biology.pollen.pollen.Pollen;
 import ua.edu.zsmu.mfi.biology.pollen.pollen.PollenForecastEvaluator;
 import ua.edu.zsmu.mfi.biology.pollen.weather.DayWeather;
 import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherForecastDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.WeatherHistoryDataProvider;
+import ua.edu.zsmu.mfi.biology.pollen.weather.YesterdayWeather;
 
 import static org.junit.Assert.assertTrue;
 
@@ -35,6 +37,13 @@ public class PollenForecastEvaluatorInstrumentedTest {
         WeatherForecastDataProvider weatherForecastDataProvider = new WeatherForecastDataProvider();
         Map<Integer, DayWeather> weatherForecast =
                 weatherForecastDataProvider.getWeather5DaysForecast(weatherForecastDataProvider.downloadWeatherJSON());
+
+        WeatherHistoryDataProvider weatherHistoryDataProvider = new WeatherHistoryDataProvider();
+
+        DayWeather yesterdayWeather = weatherHistoryDataProvider.getWeatherYesterday(weatherHistoryDataProvider.downloadWeatherJSON());
+
+        YesterdayWeather y = YesterdayWeather.getInstance();
+        y.setWeather(yesterdayWeather);
 
         PollenForecastEvaluator pollenForecastEvaluator = new PollenForecastEvaluator(weatherForecast, normalConcentration);
 
