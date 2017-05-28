@@ -20,16 +20,24 @@ public class PollenWidget extends AppWidgetProvider {
 
     private static final String UPD_CLICKED = "automaticWidgetSyncButtonClick";
 
+    private static final long REPEAT = 300000;
+
     private NormalConcentration normalConcentrationStorage;
 
     @Override
     public void onEnabled(final Context context) {
-        // Enter relevant functionality for when the first widget is created
+        Log.i("onEnabled", ""+new Date());
+        startWidget(context);
+    }
+
+    // Enter relevant functionality for when the first widget is created
+    private void startWidget(Context context) {
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 0, 3600000, getPendingSelfIntent(context, UPD_CLICKED));
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 0, REPEAT,
+                getPendingSelfIntent(context, UPD_CLICKED));
     }
 
     @Override
