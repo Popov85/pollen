@@ -28,6 +28,10 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrap
 
     private WeatherHistoryDataProvider weatherHistoryDataProvider;
 
+    // private Exception exception;
+
+    // https://stackoverflow.com/questions/14211755/how-to-gracefully-handle-exception-inside-asynctask-in-android
+
     public PollenForecastAsyncTask(RemoteViews remoteViews, Context context,
                                    NormalConcentration normalConcentration) {
         this.normalConcentration = normalConcentration;
@@ -47,13 +51,19 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrap
             history = weatherHistoryDataProvider.downloadWeatherJSON();
         } catch (Exception e) {
             widgetView.setError("Failed to download...");
-            Log.e("ERROR", e.getMessage());
+            String err = (e.getMessage()==null)?"Failed to download":e.getMessage();
+            Log.e("ERROR", err);
+            return null;
         }
         return new WeatherWrapper(forecast, history);
     }
 
     @Override
     protected void onPostExecute(WeatherWrapper wrapper) {
+        if (wrapper==null) {
+            Log.e("ERROR", "NULL REF");
+            return;
+        }
         widgetView.setMessage("Downloaded...");
         try {
             YesterdayWeather.getInstance().setWeather(weatherHistoryDataProvider.getWeatherYesterday(wrapper.getHistory()));
@@ -65,7 +75,9 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrap
             widgetView.setForecast(forecast);
         } catch (Exception e) {
             widgetView.setError("Failure processing data...");
-            Log.e("ERROR", e.getMessage());
+            String err = (e.getMessage()==null)?"Failure processing data":e.getMessage();
+            Log.e("onPostExecuteERROR", err);
+
         }
         widgetView.setMessage("Updated...");
         widgetView.setUpdated("Востаннє оновлено: "+getDate());

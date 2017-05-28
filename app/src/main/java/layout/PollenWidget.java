@@ -1,15 +1,20 @@
 package layout;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
+import java.util.Date;
 import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalPollenConcentrationDataProvider;
 import ua.edu.zsmu.mfi.biology.pollen.pollen.NormalConcentration;
 import ua.edu.zsmu.mfi.biology.pollen.R;
 import ua.edu.zsmu.mfi.biology.pollen.pollen.PollenForecastAsyncTask;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class PollenWidget extends AppWidgetProvider {
 
@@ -18,24 +23,30 @@ public class PollenWidget extends AppWidgetProvider {
     private NormalConcentration normalConcentrationStorage;
 
     @Override
-    public void onEnabled(Context context) {
+    public void onEnabled(final Context context) {
         // Enter relevant functionality for when the first widget is created
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
-        // TODO try to update right now programmatically (optionally)
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 0, 3600000, getPendingSelfIntent(context, UPD_CLICKED));
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (UPD_CLICKED.equals(intent.getAction())) {
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
-            //new RandomDemo().randomlyUpdate(views);
-            PollenForecastAsyncTask pollenForecastAsyncTask =
-                    new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
-            pollenForecastAsyncTask.execute();
+            updateForecast(context);
         }
+    }
+
+    private void updateForecast(Context context) {
+        Log.i("updateForecast", ""+new Date());
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
+        //new RandomDemo().randomlyUpdate(views);
+        PollenForecastAsyncTask pollenForecastAsyncTask =
+                new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
+        pollenForecastAsyncTask.execute();
     }
 
     @Override
@@ -48,7 +59,7 @@ public class PollenWidget extends AppWidgetProvider {
         }
     }
 
-    private  PendingIntent getPendingSelfIntent(Context context, String action) {
+    private PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);

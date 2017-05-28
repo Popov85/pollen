@@ -13,7 +13,7 @@ public final class RemoteJSONDownloader {
 
     private static final String METHOD = "GET";
     // Timeout in ms
-    private static final int TIMEOUT = 5000;
+    private static final int TIMEOUT = 15000;
 
     public static String downloadJSON(String urlStr) throws IOException {
         BufferedReader reader = null;

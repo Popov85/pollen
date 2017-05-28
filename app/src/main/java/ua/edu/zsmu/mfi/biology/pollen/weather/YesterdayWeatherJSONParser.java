@@ -42,7 +42,6 @@ public final class YesterdayWeatherJSONParser {
                 Log.i("ERROR: ", e.getMessage());
                 d = new Date();
             }
-            Log.i("MY_MS=", MS+"");
             double wind = weatherObject.getDouble("wind_kph")*MS;
             double pressure = weatherObject.getDouble("pressure_mb")/MB;
             double rain = weatherObject.getDouble("precip_mm");
