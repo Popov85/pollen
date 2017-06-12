@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 public final class LocalFileDataProvider {
 
-    private static final String NORM_CONCENTRATION_FILE_NAME = "jsonNormData.json";
+    private static final String NORM_CONCENTRATION_FILE_NAME = "jsonNormDataNew.json";
 
     private static final String SAMPLE_WEATHER_FORECAST__FILE_NAME = "forecast.json";
 

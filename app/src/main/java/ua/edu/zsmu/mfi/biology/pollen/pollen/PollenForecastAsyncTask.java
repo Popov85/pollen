@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
@@ -64,24 +65,57 @@ public class PollenForecastAsyncTask extends AsyncTask<String, Void, WeatherWrap
             Log.e("ERROR", "NULL REF");
             return;
         }
-        widgetView.setMessage("Downloaded...");
         try {
+            boolean mode = getMode();
             YesterdayWeather.getInstance().setWeather(weatherHistoryDataProvider.getWeatherYesterday(wrapper.getHistory()));
+            Log.i("Set yesterday weather: ", "Success!");
             PollenForecastEvaluator pollenForecastEvaluator =
                     new PollenForecastEvaluator(weatherForecastDataProvider
-                            .getWeather5DaysForecast(wrapper.getForecast()), normalConcentration);
-            // TODO work here to determine the mode
-            Map<Integer, Pollen> forecast = pollenForecastEvaluator.getPollenForecast();
+                            .getWeather5DaysForecast(wrapper.getForecast()), normalConcentration, mode);
+            Log.i("Got evaluator", "Success!");
+            Map<Integer, Pollen> forecast;
+            if (mode) {
+                widgetView.setMode("on");
+                forecast = pollenForecastEvaluator.getPollenForecast(getStartDay(), getDaysForecast());
+            } else {
+                widgetView.setMode("off");
+                forecast = pollenForecastEvaluator.getDemoPollenForecast();
+            }
+            Log.i("Calculated forecast", "Success! :"+forecast);
             widgetView.setForecast(forecast);
+            widgetView.setMessage("Updated...");
+            widgetView.setUpdated("Востаннє оновлено: "+getDate());
         } catch (Exception e) {
             widgetView.setError("Failure processing data...");
             String err = (e.getMessage()==null)?"Failure processing data":e.getMessage();
             Log.e("onPostExecuteERROR", err);
-
         }
-        widgetView.setMessage("Updated...");
-        widgetView.setUpdated("Востаннє оновлено: "+getDate());
     }
+
+    private int getStartDay() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_YEAR);
+    }
+
+    private int getDaysForecast() {
+        int maxDay = normalConcentration.getEndDay();
+        // last day
+        if (maxDay-getStartDay()==0) return 1;
+        // last but one day
+        if (maxDay-getStartDay()==1) return 2;
+        return 3;
+    }
+
+    // Demo or real-time modes
+    private boolean getMode() {
+        int dayOfYear = getStartDay();
+        // Check if this day is within accepted period
+        int minDay = normalConcentration.getStartDay();
+        int maxDay = normalConcentration.getEndDay();
+        if (dayOfYear>=minDay && dayOfYear<=maxDay) return true;
+        return false;
+    }
+
 
     private String getDate() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

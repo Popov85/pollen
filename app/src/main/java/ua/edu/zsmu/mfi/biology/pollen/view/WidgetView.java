@@ -37,16 +37,19 @@ public final class WidgetView {
         remoteViews.setTextViewText(R.id.today_value, String.format("%.1f", today.getValue())+" од.");
         remoteViews.setInt(R.id.today_container, "setBackgroundResource", getDrawable(today.getLevel()));
 
-        Pollen tomorrow = forecast.get(2);
-        remoteViews.setTextViewText(R.id.tomorrow_level, "Рівень " + tomorrow.getLevel());
-        remoteViews.setTextViewText(R.id.tomorrow_value, String.format("%.1f", tomorrow.getValue())+" од.");
-        remoteViews.setInt(R.id.tomorrow_container, "setBackgroundResource", getDrawable(tomorrow.getLevel()));
+        if (forecast.containsKey(2)) {
+            Pollen tomorrow = forecast.get(2);
+            remoteViews.setTextViewText(R.id.tomorrow_level, "Рівень " + tomorrow.getLevel());
+            remoteViews.setTextViewText(R.id.tomorrow_value, String.format("%.1f", tomorrow.getValue())+" од.");
+            remoteViews.setInt(R.id.tomorrow_container, "setBackgroundResource", getDrawable(tomorrow.getLevel()));
+        }
 
-        Pollen after = forecast.get(3);
-        remoteViews.setTextViewText(R.id.after_level, "Рівень " + after.getLevel());
-        remoteViews.setTextViewText(R.id.after_value, String.format("%.1f", after.getValue())+" од.");
-        remoteViews.setInt(R.id.after_container, "setBackgroundResource", getDrawable(after.getLevel()));
-
+        if (forecast.containsKey(3)) {
+            Pollen after = forecast.get(3);
+            remoteViews.setTextViewText(R.id.after_level, "Рівень " + after.getLevel());
+            remoteViews.setTextViewText(R.id.after_value, String.format("%.1f", after.getValue())+" од.");
+            remoteViews.setInt(R.id.after_container, "setBackgroundResource", getDrawable(after.getLevel()));
+        }
         update();
     }
 
@@ -74,9 +77,9 @@ public final class WidgetView {
     public void setMode(String mode) {
         int color;
         String text;
-        if (mode.equals("demo")) {
+        if (mode.equals("off")) {
             color = Color.GRAY;
-            text = "Демонстрація";
+            text = "Demo";
         } else if (mode.equals("on")) {
             color = Color.GREEN;
             text = "Real-time";

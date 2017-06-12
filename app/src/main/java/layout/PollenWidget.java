@@ -20,7 +20,8 @@ public class PollenWidget extends AppWidgetProvider {
 
     private static final String UPD_CLICKED = "automaticWidgetSyncButtonClick";
 
-    private static final long REPEAT = 300000;
+    // 1 hour (ms)
+    private static final long REPEAT = 3600000;
 
     private NormalConcentration normalConcentrationStorage;
 
@@ -35,6 +36,7 @@ public class PollenWidget extends AppWidgetProvider {
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         //this.normalConcentrationStorage = provider.getDataFromGoogleDrive();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
+        Log.i("normal:", this.normalConcentrationStorage.toString());
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 0, REPEAT,
                 getPendingSelfIntent(context, UPD_CLICKED));
@@ -43,6 +45,12 @@ public class PollenWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+
+        // TODO to delete
+        NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
+        this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
+        Log.i("normal:", this.normalConcentrationStorage.toString());
+
         if (UPD_CLICKED.equals(intent.getAction())) {
             updateForecast(context);
         }
