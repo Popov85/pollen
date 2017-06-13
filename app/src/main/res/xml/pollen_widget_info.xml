@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/pollen_widget"
     android:initialLayout="@layout/pollen_widget"
-    android:minHeight="50dp"
+    android:minHeight="55dp"
     android:minWidth="250dp"
     android:previewImage="@drawable/preview"
     android:resizeMode="none"

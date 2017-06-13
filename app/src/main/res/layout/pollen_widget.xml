@@ -24,7 +24,7 @@
             android:contentDescription="Title"
             android:textSize="10dp"
             android:textStyle="italic"
-            android:text="Концентрація пилку у повітрі м. Запоріжжя (Україна)"
+            android:text="Концентрація пилку у повітрі м. Запоріжжя"
             android:textColor="#ffffff"
             />
 
@@ -35,11 +35,11 @@
             android:layout_gravity="right"
             android:gravity="right"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="7sp"
+            android:layout_marginRight="5dp"
             android:contentDescription="Title"
             android:textSize="10dp"
-            android:text="Демо"
-            android:textColor="@android:color/holo_red_dark"
+            android:text="Mode"
+            android:textColor="@android:color/white"
             />
     </LinearLayout>
 
@@ -60,7 +60,7 @@
             android:id="@+id/today_container"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:minHeight="40dp"
+            android:minHeight="30dp"
             android:minWidth="50dp"
             android:orientation="vertical"
             android:background="@drawable/danger_unknown"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0sp"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:text="Рівень: 0"
                 android:layout_gravity="center"
                 />
@@ -109,7 +109,7 @@
         android:id="@+id/tomorrow_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:minHeight="40dp"
+        android:minHeight="30dp"
         android:minWidth="50dp"
         android:orientation="vertical"
         android:background="@drawable/danger_unknown"
@@ -135,7 +135,7 @@
             android:layout_marginTop="0sp"
             android:text="Рівень: 0"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/tomorrow_value"
@@ -154,7 +154,7 @@
         android:id="@+id/after_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:minHeight="40dp"
+        android:minHeight="30dp"
         android:minWidth="50dp"
         android:orientation="vertical"
         android:background="@drawable/danger_unknown"
@@ -180,7 +180,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="0sp"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:text="Рівень: 0"
             />
 
@@ -204,8 +204,8 @@
             android:layout_height="match_parent"
             android:minWidth="40dp"
             android:minHeight="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             >
 
@@ -213,8 +213,8 @@
                 android:id="@+id/updateImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minWidth="20dp"
-                android:minHeight="20dp"
+                android:minWidth="10dp"
+                android:minHeight="10dp"
                 android:layout_gravity="right"
                 android:adjustViewBounds="true"
                 android:background="@drawable/icon_upd"
@@ -238,8 +238,7 @@
             android:textColor="@android:color/holo_red_dark"
             android:layout_gravity="start"
             android:layout_marginLeft="2dp"
-            android:textSize="10dp"
-            android:text="Connection problems!" />
+            android:textSize="10dp"/>
 
         <TextView
             android:id="@+id/updated"
@@ -249,7 +248,7 @@
             android:layout_gravity="end"
             android:layout_marginRight="7sp"
             android:textSize="10dp"
-            android:text="Востаннє оновлено: 01/09/17 at 6 a.m." />
+            android:text="Востаннє оновлено: -" />
 
     </FrameLayout>
 

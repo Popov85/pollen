@@ -42,6 +42,10 @@ public final class WidgetView {
             remoteViews.setTextViewText(R.id.tomorrow_level, "Рівень " + tomorrow.getLevel());
             remoteViews.setTextViewText(R.id.tomorrow_value, String.format("%.1f", tomorrow.getValue())+" од.");
             remoteViews.setInt(R.id.tomorrow_container, "setBackgroundResource", getDrawable(tomorrow.getLevel()));
+        } else {
+            remoteViews.setTextViewText(R.id.tomorrow_level, "Рівень -");
+            remoteViews.setTextViewText(R.id.tomorrow_value, String.format("%.1f", "0 од."));
+            remoteViews.setInt(R.id.tomorrow_container, "setBackgroundResource", getDrawable(0));
         }
 
         if (forecast.containsKey(3)) {
@@ -49,6 +53,10 @@ public final class WidgetView {
             remoteViews.setTextViewText(R.id.after_level, "Рівень " + after.getLevel());
             remoteViews.setTextViewText(R.id.after_value, String.format("%.1f", after.getValue())+" од.");
             remoteViews.setInt(R.id.after_container, "setBackgroundResource", getDrawable(after.getLevel()));
+        } else {
+            remoteViews.setTextViewText(R.id.after_level, "Рівень -");
+            remoteViews.setTextViewText(R.id.after_value, String.format("%.1f", "0 од."));
+            remoteViews.setInt(R.id.after_container, "setBackgroundResource", getDrawable(0));
         }
         update();
     }
@@ -78,7 +86,7 @@ public final class WidgetView {
         int color;
         String text;
         if (mode.equals("off")) {
-            color = Color.GRAY;
+            color = Color.RED;
             text = "Demo";
         } else if (mode.equals("on")) {
             color = Color.GREEN;
@@ -91,6 +99,8 @@ public final class WidgetView {
 
     private int getDrawable(int level) {
         switch (level) {
+            case 0:
+                return R.drawable.danger_unknown;
             case 1:
                 return R.drawable.danger_1;
             case 2:

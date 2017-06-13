@@ -46,10 +46,10 @@ public class PollenWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        // TODO to delete
+        // TODO delete
         NormalPollenConcentrationDataProvider provider = new NormalPollenConcentrationDataProvider();
         this.normalConcentrationStorage = provider.getDataFromLocalFile(context);
-        Log.i("normal:", this.normalConcentrationStorage.toString());
+
 
         if (UPD_CLICKED.equals(intent.getAction())) {
             updateForecast(context);
@@ -57,9 +57,7 @@ public class PollenWidget extends AppWidgetProvider {
     }
 
     private void updateForecast(Context context) {
-        Log.i("updateForecast", ""+new Date());
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.pollen_widget);
-        //new RandomDemo().randomlyUpdate(views);
         PollenForecastAsyncTask pollenForecastAsyncTask =
                 new PollenForecastAsyncTask(views, context, normalConcentrationStorage);
         pollenForecastAsyncTask.execute();
